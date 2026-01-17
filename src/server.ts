@@ -95,7 +95,14 @@ export class Things3Server {
 
       // All tools are now handled by the registry!
       const result = await this.registry.executeTool(name, args);
-      return { toolResult: result };
+      return {
+        content: [
+          {
+            type: 'text',
+            text: JSON.stringify(result, null, 2),
+          },
+        ],
+      };
     });
 
     this.logger.info(`Registered ${this.registry.getToolCount()} tools via registry`);
@@ -111,4 +118,3 @@ export class Things3Server {
     await this.server.close();
   }
 }
-
